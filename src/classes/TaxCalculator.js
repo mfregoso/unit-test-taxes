@@ -1,20 +1,8 @@
-import {roundUp, posNumber} from "./index";
+import {roundUp} from "../utils";
 import {TAX_RATE, STD_DEDUCTION} from "../constants";
+import TaxPayer from "./TaxPayer";
 
-export class TaxPayer {
-  constructor(data) {
-    if (!data) throw new Error("null-data");
-    const {income, deductions, isItemizing} = data;
-    if (!posNumber(income) && !posNumber(deductions) && typeof isItemizing !== "boolean") {
-      throw new Error("invalid-data");
-    }
-    this.income = roundUp(income);
-    this.deductions = roundUp(isItemizing ? deductions : STD_DEDUCTION);
-    this.isItemizing = isItemizing;
-  }
-}
-
-export class TaxCalculator {
+export default class TaxCalculator {
   constructor(taxpayer) {
     if (!taxpayer instanceof TaxPayer) throw new Error("invalid-taxpayer");
     this.taxpayer = taxpayer;

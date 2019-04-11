@@ -1,4 +1,4 @@
-import {TaxPayer} from "../src/utils/calculator";
+import TaxPayer from "../src/classes/TaxPayer";
 import {taxpayerStd, taxpayerItem} from "../src/constants/test_data";
 import {STD_DEDUCTION} from "../src/constants";
 
