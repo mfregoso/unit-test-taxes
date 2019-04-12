@@ -6,7 +6,10 @@ export const isNumber = input => {
 }
 
 export const roundUp = input => {
-  if (isNumber(input)) return Math.ceil(input);
+  if (isNumber(input)) {
+    const cleanerNum = Number(input).toFixed(2)
+    return Math.ceil(cleanerNum);
+  }
   throw new Error("invalid-number");
 }
 
