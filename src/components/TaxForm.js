@@ -16,10 +16,11 @@ const TaxForm = () => {
   }
 
   const taxInfo = new TaxCalculator({income, deductions, isItemizing});
+  const mrgRate = Number(taxInfo.getTaxBracket().rate*100).toFixed();
 
   return (
     <div>
-      <h3 className="title">Taxes ({TAX_RATE*100}% flat rate)</h3>
+      <h3 className="title">Taxes ({mrgRate}% marginal rate)</h3>
       <p />
       <input
         value={income}
