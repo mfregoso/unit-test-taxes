@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { preventDecimal, posNumber } from "../utils";
-import {STD_DEDUCTION, TAX_RATE} from "../constants";
+import {STD_DEDUCTION} from "../constants";
 import TaxCalculator from "../classes/TaxCalculator";
 
 const TaxForm = () => {
