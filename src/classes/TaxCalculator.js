@@ -1,16 +1,22 @@
-import {roundUp} from "../utils";
+import {roundUp, posNumber} from "../utils";
 import {TAX_RATE, STD_DEDUCTION} from "../constants";
-import TaxPayer from "./TaxPayer";
 
 export default class TaxCalculator {
-  constructor(taxpayer) {
-    if (!taxpayer instanceof TaxPayer) throw new Error("invalid-taxpayer");
-    this.taxpayer = taxpayer;
+  constructor(taxData) {
+    if (!taxData) throw new Error("null-data");
+    const {income, deductions, isItemizing} = taxData;
+    if (!posNumber(income) && !posNumber(deductions) && typeof isItemizing !== "boolean") {
+      throw new Error("invalid-data");
+    }
+    
+    this.income = roundUp(income);
+    this.deductions = roundUp(isItemizing ? deductions : STD_DEDUCTION);
+    this.isItemizing = isItemizing;
     this.taxLiability = 0;
   }
 
   getAdjIncome() {
-    const adjIncome = this.taxpayer.income - this.taxpayer.deductions;
+    const adjIncome = this.income - this.deductions;
     return adjIncome < 0 ? 0: adjIncome;
   }
 
@@ -21,10 +27,10 @@ export default class TaxCalculator {
   }
 
   validate() {
-    if (this.taxpayer.isItemizing && this.taxpayer.deductions < STD_DEDUCTION) {
+    if (this.isItemizing && this.deductions < STD_DEDUCTION) {
       return false;
     }
-    if (!this.taxpayer.isItemizing && this.taxpayer.deductions !== STD_DEDUCTION) {
+    if (!this.isItemizing && this.deductions !== STD_DEDUCTION) {
       return false;
     }
     return true;

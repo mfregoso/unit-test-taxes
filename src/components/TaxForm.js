@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { preventDecimal, posNumber } from "../utils";
 import {STD_DEDUCTION, TAX_RATE} from "../constants";
 import TaxCalculator from "../classes/TaxCalculator";
-import TaxPayer from "../classes/TaxPayer";
 
 const TaxForm = () => {
   const [income, setIncome] = useState("");
@@ -20,8 +19,7 @@ const TaxForm = () => {
     }
   }
 
-  const taxpayer = new TaxPayer({income, deductions, isItemizing});
-  const taxInfo = new TaxCalculator(taxpayer);
+  const taxInfo = new TaxCalculator({income, deductions, isItemizing});
 
   return (
     <div>
