@@ -8,14 +8,10 @@ const TaxForm = () => {
   const [deductions, setDeductions] = useState(STD_DEDUCTION);
   const [isItemizing, setItemizing] = useState(false);
 
-  const deductOptionHandler = (isItemizing) => {
-    if (!isItemizing) setDeductions(STD_DEDUCTION);
-    setItemizing(isItemizing);
-  }
-
-  const numInputHandler = (callback, value) => {
-    if (posNumber(value)) {
-      callback(value);
+  const numInputHandler = (callback, e) => {
+    const val = e.target.value;
+    if (posNumber(val)) {
+      callback(val);
     }
   }
 
@@ -27,7 +23,7 @@ const TaxForm = () => {
       <p />
       <input
         value={income}
-        onChange={e => numInputHandler(setIncome, e.target.value)}
+        onChange={e => numInputHandler(setIncome, e)}
         type="number"
         onKeyPress={e => preventDecimal(e)}
         className="form-control"
@@ -38,10 +34,8 @@ const TaxForm = () => {
         <input
           className="form-check-input"
           type="radio"
-          name="deductions"
-          value="standard"
           checked={!isItemizing}
-          onChange={() => deductOptionHandler(false)}
+          onChange={() => setItemizing(false)}
         />
         <label className="form-check-label">
           Standard Deduction ($8,500)
@@ -51,10 +45,8 @@ const TaxForm = () => {
         <input
           className="form-check-input"
           type="radio"
-          name="deductions"
-          value="itemized"
           checked={isItemizing}
-          onChange={() => deductOptionHandler(true)}
+          onChange={() => setItemizing(true)}
         />
         <label className="form-check-label">
           Itemized Deductions
@@ -65,12 +57,11 @@ const TaxForm = () => {
           <br />
           <input
             value={deductions}
-            onChange={e => numInputHandler(setDeductions, e.target.value)}
+            onChange={e => numInputHandler(setDeductions, e)}
             type="number"
             onKeyPress={e => preventDecimal(e)}
             className="form-control"
             placeholder="Enter Total Itemized Deductions"
-            disabled={!isItemizing}
           />
         </React.Fragment>
       }

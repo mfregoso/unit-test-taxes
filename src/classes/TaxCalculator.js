@@ -5,7 +5,7 @@ export default class TaxCalculator {
   constructor(taxData) {
     if (!taxData) throw new Error("null-data");
     const {income, deductions, isItemizing} = taxData;
-    if (!posNumber(income) && !posNumber(deductions) && typeof isItemizing !== "boolean") {
+    if (!posNumber(income) || !posNumber(deductions) || typeof isItemizing !== "boolean") {
       throw new Error("invalid-data");
     }
     
