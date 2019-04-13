@@ -4,7 +4,7 @@ import {STD_DEDUCTION} from "../constants";
 import TaxCalculator from "../classes/TaxCalculator";
 
 const TaxForm = () => {
-  const [income, setIncome] = useState("");
+  const [income, setIncome] = useState(0);
   const [deductions, setDeductions] = useState(STD_DEDUCTION);
   const [isItemizing, setItemizing] = useState(false);
 
@@ -19,18 +19,23 @@ const TaxForm = () => {
   const mrgRate = Number(taxInfo.getTaxBracket().rate*100).toFixed();
 
   return (
-    <div>
-      <h3 className="title">Taxes ({mrgRate}% marginal rate)</h3>
+    <div className="mx-auto col-xl-5 col-lg-5 col-md-6 col-sm-12 col-xs-12" style={{paddingTop: "2em"}}>
+      <div className="text-center">
+        <h2>EZ Tax Calculator</h2>
+        <h5>Current marginal rate: {mrgRate}%</h5>
+      </div>
       <p />
+      <label className="font-weight-bold">Total Gross Income</label>
       <input
         value={income}
         onChange={e => numInputHandler(setIncome, e)}
         type="number"
         onKeyPress={e => preventDecimal(e)}
         className="form-control"
-        placeholder="Enter Income"
+        placeholder="Enter Total Gross Income"
       />
       <br />
+      <label className="font-weight-bold">Select a Deduction</label>
       <div className="form-check">
         <input
           className="form-check-input"
@@ -67,6 +72,34 @@ const TaxForm = () => {
         </React.Fragment>
       }
       <br />
+      <div className="tax-breakdown-table">
+        <span className="font-weight-bold">Tax Breakdown</span>
+        <div className="row">
+          <div className="col">
+            Adjusted Gross Income
+          </div>
+          <div className="col">
+            ${taxInfo.getAdjIncome().toLocaleString()}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <span className="font-italic">Less Personal Exemptions</span>:
+          </div>
+          <div className="col">
+            $0 (not implemented)
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            Taxable Income:
+          </div>
+          <div className="col">
+            ${taxInfo.getTaxableIncome().toLocaleString()}
+          </div>
+        </div>
+      </div>
+      <p/>
       <h3>Tax: ${taxInfo.getTaxLiability().toLocaleString()}</h3>
       <br />
       <button className="btn btn-success" onClick={() => alert(taxInfo.validate())}>
