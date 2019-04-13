@@ -20,8 +20,15 @@ export default class TaxCalculator {
     return adjIncome < 0 ? 0: adjIncome;
   }
 
+  getTaxableIncome() {
+    const adjIncome = this.getAdjIncome();
+    const persExemptions = 0; //TODO?
+    const taxableIncome = adjIncome - persExemptions;
+    return taxableIncome < 0 ? 0: taxableIncome;
+  }
+
   getTaxBracket() {
-    const taxableIncome = this.getAdjIncome();
+    const taxableIncome = this.getTaxableIncome();
     const lowestBracket = TAX_BRACKETS.slice(-1)[0];
     for (let bracket of TAX_BRACKETS) {
       if (taxableIncome >= bracket.threshold) {
@@ -31,7 +38,6 @@ export default class TaxCalculator {
     return lowestBracket;
   }
   
-
   getTaxLiability() {
     const taxableIncome = this.getAdjIncome();
     const taxBracket = this.getTaxBracket();
