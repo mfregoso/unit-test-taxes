@@ -21,3 +21,17 @@ export const posNumber = input => {
   if (isNumber(input) && input >= 0) return true;
   return false;
 }
+
+export const nonNegative = input => {
+  return input < 0 ? 0: input;
+};
+
+export const allPosNums = arr => {
+  if (!Array.isArray(arr)) return false;
+  for (let num of arr) {
+    if (!posNumber(num)) {
+      return false;
+    }
+  }
+  return true;
+}

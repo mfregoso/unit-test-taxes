@@ -4,7 +4,8 @@ import {STD_DEDUCTION} from "../constants";
 import TaxCalculator from "../classes/TaxCalculator";
 
 const TaxForm = () => {
-  const [income, setIncome] = useState(0);
+  const [income, setIncome] = useState("");
+  const [iraContrib, setIraContrib] = useState("");
   const [deductions, setDeductions] = useState(STD_DEDUCTION);
   const [isItemizing, setItemizing] = useState(false);
 
@@ -15,7 +16,7 @@ const TaxForm = () => {
     }
   }
 
-  const taxInfo = new TaxCalculator({income, deductions, isItemizing});
+  const taxInfo = new TaxCalculator({income, deductions, isItemizing, iraContrib});
   const mrgRate = Number(taxInfo.getTaxBracket().rate*100).toFixed();
 
   return (
@@ -30,9 +31,19 @@ const TaxForm = () => {
         value={income}
         onChange={e => numInputHandler(setIncome, e)}
         type="number"
-        onKeyPress={e => preventDecimal(e)}
+        onKeyDown={e => preventDecimal(e)}
         className="form-control"
         placeholder="Enter Total Gross Income"
+      />
+      <br />
+      <label className="font-weight-bold">Annual IRA Contributions</label>
+      <input
+        value={iraContrib}
+        onChange={e => numInputHandler(setIraContrib, e)}
+        type="number"
+        onKeyDown={e => preventDecimal(e)}
+        className="form-control"
+        placeholder="Enter Annual IRA Contributions"
       />
       <br />
       <label className="font-weight-bold">Select a Deduction</label>
@@ -65,7 +76,7 @@ const TaxForm = () => {
             value={deductions}
             onChange={e => numInputHandler(setDeductions, e)}
             type="number"
-            onKeyPress={e => preventDecimal(e)}
+            onKeyDown={e => preventDecimal(e)}
             className="form-control"
             placeholder="Enter Total Itemized Deductions"
           />
