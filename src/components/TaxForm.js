@@ -18,6 +18,12 @@ const TaxForm = () => {
 
   const taxInfo = new TaxCalculator({income, deductions, isItemizing, iraContrib});
   const mrgRate = Number(taxInfo.getTaxBracket().rate*100).toFixed();
+  const formMsgs = taxInfo.checkForm();
+
+  const showTax = () => {
+    if (formMsgs.isValid) return `$${taxInfo.getTaxLiability().toLocaleString()}`;
+    return <small className="text-danger">Please correct form</small>;
+  }
 
   return (
     <div className="mx-auto col-xl-5 col-lg-5 col-md-6 col-sm-12 col-xs-12" style={{paddingTop: "2em"}}>
@@ -42,9 +48,12 @@ const TaxForm = () => {
         onChange={e => numInputHandler(setIraContrib, e)}
         type="number"
         onKeyDown={e => preventDecimal(e)}
-        className="form-control"
+        className={`form-control ${formMsgs.ira.showMsg && "is-invalid"}`}
         placeholder="Enter Annual IRA Contributions"
       />
+      {formMsgs.ira.showMsg &&
+        <div className="text-danger">{formMsgs.ira.msg}</div>
+      }
       <br />
       <label>
         <u className="font-weight-bold">Adjusted Gross Income</u>: ${taxInfo.getAdjIncome().toLocaleString()}
@@ -81,24 +90,27 @@ const TaxForm = () => {
             onChange={e => numInputHandler(setDeductions, e)}
             type="number"
             onKeyDown={e => preventDecimal(e)}
-            className="form-control"
+            className={`form-control ${formMsgs.itemized.showMsg && "is-invalid"}`}
             placeholder="Enter Total Itemized Deductions"
           />
+          {formMsgs.itemized.showMsg &&
+            <div className="text-danger">{formMsgs.itemized.msg}</div>
+          }
         </React.Fragment>
       }
       <br />
-      <div><span className="font-weight-bold">Personal Exemption</span> (phased out after ${PE_PHASEOUT.threshold.toLocaleString()} AGI)</div>
+      <div>
+        <span className="font-weight-bold">Personal Exemption&nbsp;</span>
+        {formMsgs.exemption.showMsg && `(${formMsgs.exemption.msg})`}
+      </div>
       ${taxInfo.getExemptionAmt().toLocaleString()}
       <p />
       <label>
         <u className="font-weight-bold">Taxable Income</u>: ${taxInfo.getTaxableIncome().toLocaleString()}
       </label>
       <p/>
-      <h3>Tax: ${taxInfo.getTaxLiability().toLocaleString()}</h3>
+      <h3>Tax: {showTax()}</h3>
       <br />
-      <button className="btn btn-success" onClick={() => alert(taxInfo.validate())}>
-        Validate Form
-      </button>
     </div>
   );
 };

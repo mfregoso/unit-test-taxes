@@ -1,6 +1,7 @@
 import {roundUp} from "../utils";
 
 export const STD_DEDUCTION = 12500;
+export const IRA_MAX = 5500;
 export const PERS_EXEMPTION = 4000;
 export const PE_PHASEOUT = {threshold: 260000, limit: 384000};
 
@@ -46,3 +47,19 @@ export const TAX_BRACKETS = [
     id: 1,
   },
 ];
+
+export const FORM_MSGS = {
+  isValid: true,
+  ira: {
+    showMsg: false,
+    msg: `IRA contributions deduction is limited to $${IRA_MAX.toLocaleString()}`
+  },
+  itemized: {
+    showMsg: false,
+    msg: `Itemized deductions must be at least $${STD_DEDUCTION.toLocaleString()}`
+  },
+  exemption: {
+    showMsg: false,
+    msg: `phased out after $${PE_PHASEOUT.threshold.toLocaleString()} AGI`
+  },
+};

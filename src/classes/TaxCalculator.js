@@ -1,5 +1,5 @@
 import {roundUp, allPosNums, nonNegative} from "../utils";
-import {STD_DEDUCTION, TAX_BRACKETS, PERS_EXEMPTION, PE_PHASEOUT} from "../constants";
+import {STD_DEDUCTION, TAX_BRACKETS, PERS_EXEMPTION, PE_PHASEOUT, IRA_MAX, FORM_MSGS} from "../constants";
 
 export default class TaxCalculator {
   constructor(taxData) {
@@ -61,13 +61,38 @@ export default class TaxCalculator {
     return roundUp(taxLiability);
   }
 
-  validate() {
-    if (this.isItemizing && this.deductions < STD_DEDUCTION) {
-      return false;
-    }
-    if (!this.isItemizing && this.deductions !== STD_DEDUCTION) {
-      return false;
-    }
+  validIraContrib() {
+    if (this.iraContrib > IRA_MAX) return false;
     return true;
+  }
+
+  validDeductions() {
+    if (this.isItemizing && this.itemizingLessThanStd()) return false;
+    return true;
+  }
+
+  exemptionIsPhasedOut() {
+    if (this.getExemptionAmt() < PERS_EXEMPTION) return true;
+    return false;
+  }
+
+  checkForm() {
+    const msgObj = {...FORM_MSGS};
+    if (!this.validIraContrib()) {
+      msgObj.ira.showMsg = true;
+      msgObj.isValid = false;
+    } else {
+      msgObj.ira.showMsg = false;
+    }
+    if (!this.validDeductions()) {
+      msgObj.itemized.showMsg = true;
+      msgObj.isValid = false;
+    }
+    else {
+      msgObj.itemized.showMsg = false;
+    }
+    if (this.exemptionIsPhasedOut()) msgObj.exemption.showMsg = true;
+    else msgObj.exemption.showMsg = false;
+    return msgObj;
   }
 }
