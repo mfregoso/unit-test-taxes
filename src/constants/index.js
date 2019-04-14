@@ -1,6 +1,8 @@
 import {roundUp} from "../utils";
 
-export const STD_DEDUCTION = 8500;
+export const STD_DEDUCTION = 12500;
+export const PERS_EXEMPTION = 4000;
+export const PE_PHASEOUT = {threshold: 260000, limit: 384000};
 
 export const MRG_RATE_1 = 0.15;
 export const INC_THRES_1 = 0;

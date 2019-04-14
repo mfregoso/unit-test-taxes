@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { preventDecimal, posNumber } from "../utils";
-import {STD_DEDUCTION} from "../constants";
+import {STD_DEDUCTION, PE_PHASEOUT} from "../constants";
 import TaxCalculator from "../classes/TaxCalculator";
 
 const TaxForm = () => {
@@ -46,7 +46,11 @@ const TaxForm = () => {
         placeholder="Enter Annual IRA Contributions"
       />
       <br />
-      <label className="font-weight-bold">Select a Deduction</label>
+      <label>
+        <u className="font-weight-bold">Adjusted Gross Income</u>: ${taxInfo.getAdjIncome().toLocaleString()}
+      </label>
+      <p />
+      <label className="font-weight-bold">Less: Deductions</label>
       <div className="form-check">
         <input
           className="form-check-input"
@@ -55,7 +59,7 @@ const TaxForm = () => {
           onChange={() => setItemizing(false)}
         />
         <label className="form-check-label">
-          Standard Deduction ($8,500)
+          Standard Deduction (${STD_DEDUCTION.toLocaleString()})
         </label>
       </div>
       <div className="form-check">
@@ -83,33 +87,12 @@ const TaxForm = () => {
         </React.Fragment>
       }
       <br />
-      <div className="tax-breakdown-table">
-        <span className="font-weight-bold">Tax Breakdown</span>
-        <div className="row">
-          <div className="col">
-            Adjusted Gross Income
-          </div>
-          <div className="col">
-            ${taxInfo.getAdjIncome().toLocaleString()}
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            <span className="font-italic">Less Personal Exemptions</span>:
-          </div>
-          <div className="col">
-            $0 (not implemented)
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            Taxable Income:
-          </div>
-          <div className="col">
-            ${taxInfo.getTaxableIncome().toLocaleString()}
-          </div>
-        </div>
-      </div>
+      <div><span className="font-weight-bold">Personal Exemption</span> (phased out after ${PE_PHASEOUT.threshold.toLocaleString()} AGI)</div>
+      ${taxInfo.getExemptionAmt().toLocaleString()}
+      <p />
+      <label>
+        <u className="font-weight-bold">Taxable Income</u>: ${taxInfo.getTaxableIncome().toLocaleString()}
+      </label>
       <p/>
       <h3>Tax: ${taxInfo.getTaxLiability().toLocaleString()}</h3>
       <br />

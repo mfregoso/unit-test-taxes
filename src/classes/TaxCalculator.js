@@ -1,5 +1,5 @@
 import {roundUp, allPosNums, nonNegative} from "../utils";
-import {STD_DEDUCTION, TAX_BRACKETS} from "../constants";
+import {STD_DEDUCTION, TAX_BRACKETS, PERS_EXEMPTION, PE_PHASEOUT} from "../constants";
 
 export default class TaxCalculator {
   constructor(taxData) {
@@ -21,22 +21,36 @@ export default class TaxCalculator {
     return nonNegative(adjIncome);
   }
 
+  getExemptionAmt() {
+    const adjIncome = this.getAdjIncome();
+    if (adjIncome >= PE_PHASEOUT.limit) return 0;
+    if (adjIncome <= PE_PHASEOUT.threshold) return PERS_EXEMPTION;
+    const phaseOutRange = PE_PHASEOUT.limit - PE_PHASEOUT.threshold;
+    const excessIncome = adjIncome - PE_PHASEOUT.threshold;
+    const remainingPercent = 1 - (excessIncome / phaseOutRange);
+    return roundUp(remainingPercent * PERS_EXEMPTION);
+  }
+
+  itemizingLessThanStd() {
+    return this.isItemizing && this.deductions < STD_DEDUCTION ? true : false;
+  }
+
   getTaxableIncome() {
     const adjIncome = this.getAdjIncome();
-    const persExemptions = 0; //TODO?
-    const taxableIncome = adjIncome - persExemptions - this.deductions;
+    const persExemptionAmt = this.getExemptionAmt();
+    let safeDeduction = this.deductions;
+    if (this.itemizingLessThanStd()) safeDeduction = STD_DEDUCTION;
+    const taxableIncome = adjIncome - persExemptionAmt - safeDeduction;
     return nonNegative(taxableIncome);
   }
 
   getTaxBracket() {
     const taxableIncome = this.getTaxableIncome();
-    const lowestBracket = TAX_BRACKETS.slice(-1)[0];
     for (let bracket of TAX_BRACKETS) {
       if (taxableIncome >= bracket.threshold) {
         return bracket;
       }
     }
-    return lowestBracket;
   }
   
   getTaxLiability() {
