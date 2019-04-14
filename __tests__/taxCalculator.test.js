@@ -27,24 +27,24 @@ describe('Instantiation scenarios', () => {
   });
 });
 
-describe('Standard deduction scenarios', () => {
+describe('STANDARD deduction scenarios', () => {
   test('Income: 0', () => {
     const stdTax0 = new TaxCalculator(taxpayerStd);
     expect(stdTax0.getTaxLiability()).toEqual(0);
   });
 
-  test('Income: 8,500', () => {
-    const stdTax8500 = new TaxCalculator({...taxpayerStd, income: 8500});
-    expect(stdTax8500.getTaxLiability()).toEqual(0);
+  test('Income: 12,500', () => {
+    const stdTax12500 = new TaxCalculator({...taxpayerStd, income: 12500});
+    expect(stdTax12500.getTaxLiability()).toEqual(0);
   });
 
-  test('Income: 8,502', () => {
-    const stdTax8502 = new TaxCalculator({...taxpayerStd, income: 8502});
-    expect(stdTax8502.getTaxLiability()).toEqual(1);
+  test('Income: 12,502', () => {
+    const stdTax12502 = new TaxCalculator({...taxpayerStd, income: 12502});
+    expect(stdTax12502.getTaxLiability()).toEqual(1);
   });
 });
 
-describe('Itemized deduction scenarios', () => {
+describe('ITEMIZED deduction scenarios', () => {
   test('Income: 0, Deductions: 0', () => {
     const itmTax = new TaxCalculator(taxpayerItem);
     expect(itmTax.validate()).toBeFalsy();
