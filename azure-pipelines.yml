@@ -21,15 +21,15 @@ steps:
     npm install
   displayName: 'npm install'
 
-  - script: |
-    npm run test
-  displayName: 'run unit tests'
+- script: |
+  npm run test
+displayName: 'run unit tests'
 
-  - task: PublishTestResults@2
-    condition: succeededOrFailed()
-    inputs:
-      testRunner: JUnit
-      testResultsFiles: '**/TEST-RESULTS.xml'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '**/TEST-RESULTS.xml'
 
   - script: |
     git config user.email "mfregoso@users.noreply.github.com" 
