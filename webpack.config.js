@@ -5,10 +5,10 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "bundle.js",
-    path: path.join(__dirname, "docs")
+    path: path.join(__dirname, "build")
   },
   devServer: {
-    contentBase: path.join(__dirname, "docs"),
+    contentBase: path.join(__dirname, "build"),
     port: 9000
   },
   module: {
