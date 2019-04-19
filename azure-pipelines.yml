@@ -31,7 +31,7 @@ steps:
     testRunner: JUnit
     testResultsFiles: '**/TEST-RESULTS.xml'
 
-  - script: |
+- script: |
     git config user.email "mfregoso@users.noreply.github.com" 
     git config user.name "mfregoso"
     npm run deploy -- -r https://$(ghkey)@github.com/mfregoso/unit-test-taxes.git
