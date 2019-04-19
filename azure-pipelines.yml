@@ -18,8 +18,21 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    npm install
+  displayName: 'npm install'
+
+  - script: |
+    npm run test
+  displayName: 'run unit tests'
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: '**/TEST-RESULTS.xml'
+
+  - script: |
     git config user.email "mfregoso@users.noreply.github.com" 
     git config user.name "mfregoso"
-    npm install
     npm run deploy -- -r https://$(ghkey)@github.com/mfregoso/unit-test-taxes.git
-  displayName: 'npm install, build and deploy'
+  displayName: 'deploy to gh-pages'
