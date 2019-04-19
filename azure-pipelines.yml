@@ -22,8 +22,8 @@ steps:
   displayName: 'npm install'
 
 - script: |
-  npm run test
-displayName: 'run unit tests'
+    npm run test
+  displayName: 'run unit tests'
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
