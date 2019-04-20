@@ -10,12 +10,14 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- checkout: self
-  persistCredentials: true
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
+
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'deploy_key'
 
 - script: |
     npm install
@@ -32,7 +34,17 @@ steps:
     testResultsFiles: '**/TEST-RESULTS.xml'
 
 - script: |
-    git config user.email "mfregoso@users.noreply.github.com" 
-    git config user.name "mfregoso"
-    npm run deploy -- -r https://$(ghkey)@github.com/mfregoso/unit-test-taxes.git
-  displayName: 'deploy to gh-pages'
+    npm run build
+    git config --local user.email "mfregoso@users.noreply.github.com" 
+    git config --local user.name "mfregoso"
+    git add .
+    git commit -m "update build ***NO_CI***"
+  displayName: 'build and commit changes'
+
+- script: |
+    mkdir ~/.ssh && mv $DOWNLOADSECUREFILE_SECUREFILEPATH ~/.ssh/id_rsa
+    chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+    ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    git remote set-url --push origin git@github.com:mfregoso/unit-test-taxes.git
+    git push origin HEAD:master
+  displayName: 'push new build'
