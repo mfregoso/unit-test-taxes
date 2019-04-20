@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Jest Unit Tests" tests="25" failures="0" time="8.72">
+  <testsuite name="Instantiation scenarios" errors="0" failures="0" skipped="0" timestamp="2019-04-20T00:51:07" time="7.926" tests="19">
+    <testcase classname="Instantiation scenarios Empty argument" name="Instantiation scenarios Empty argument" time="0.008">
+    </testcase>
+    <testcase classname="Instantiation scenarios Invalid argument values" name="Instantiation scenarios Invalid argument values" time="0.002">
+    </testcase>
+    <testcase classname="Instantiation scenarios Standard tax form" name="Instantiation scenarios Standard tax form" time="0">
+    </testcase>
+    <testcase classname="Instantiation scenarios Value of deductions when standard" name="Instantiation scenarios Value of deductions when standard" time="0.002">
+    </testcase>
+    <testcase classname="Instantiation scenarios Itemized tax form" name="Instantiation scenarios Itemized tax form" time="0.001">
+    </testcase>
+    <testcase classname="Instantiation scenarios Value of deductions when itemized = input" name="Instantiation scenarios Value of deductions when itemized = input" time="0">
+    </testcase>
+    <testcase classname="STANDARD: 15% bracket scenarios Income: 0" name="STANDARD: 15% bracket scenarios Income: 0" time="0.001">
+    </testcase>
+    <testcase classname="STANDARD: 15% bracket scenarios Income: 16,500, IRA: 0" name="STANDARD: 15% bracket scenarios Income: 16,500, IRA: 0" time="0.001">
+    </testcase>
+    <testcase classname="STANDARD: 15% bracket scenarios Income: 16,502, IRA: 0" name="STANDARD: 15% bracket scenarios Income: 16,502, IRA: 0" time="0">
+    </testcase>
+    <testcase classname="STANDARD: 15% bracket scenarios Income: 22500, IRA: 5500" name="STANDARD: 15% bracket scenarios Income: 22500, IRA: 5500" time="0.001">
+    </testcase>
+    <testcase classname="STANDARD: 15% bracket scenarios Income: 22000, IRA: 5500" name="STANDARD: 15% bracket scenarios Income: 22000, IRA: 5500" time="0">
+    </testcase>
+    <testcase classname="STANDARD: 15% bracket scenarios Income: 79500, IRA: 3000" name="STANDARD: 15% bracket scenarios Income: 79500, IRA: 3000" time="0.001">
+    </testcase>
+    <testcase classname="STANDARD: 20% bracket scenarios Income: 0" name="STANDARD: 20% bracket scenarios Income: 0" time="0">
+    </testcase>
+    <testcase classname="STANDARD: 20% bracket scenarios Income: 16,500, IRA: 0" name="STANDARD: 20% bracket scenarios Income: 16,500, IRA: 0" time="0.001">
+    </testcase>
+    <testcase classname="ITEMIZED: 15% bracket scenarios Income: 0, Deductions: 0" name="ITEMIZED: 15% bracket scenarios Income: 0, Deductions: 0" time="0.001">
+    </testcase>
+    <testcase classname="ITEMIZED: 15% bracket scenarios Income: 8000, Deductions: 13000" name="ITEMIZED: 15% bracket scenarios Income: 8000, Deductions: 13000" time="0">
+    </testcase>
+    <testcase classname="ITEMIZED: 15% bracket scenarios Income: 22000, Deductions: 12500, IRA: 5500" name="ITEMIZED: 15% bracket scenarios Income: 22000, Deductions: 12500, IRA: 5500" time="0">
+    </testcase>
+    <testcase classname="ITEMIZED: 15% bracket scenarios Income: 79500, Deductions: 12500, IRA: 3000" name="ITEMIZED: 15% bracket scenarios Income: 79500, Deductions: 12500, IRA: 3000" time="0">
+    </testcase>
+    <testcase classname="ITEMIZED: 15% bracket scenarios Income: 75000, Deductions: 24000, IRA: 0" name="ITEMIZED: 15% bracket scenarios Income: 75000, Deductions: 24000, IRA: 0" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Utilities Test" errors="0" failures="0" skipped="0" timestamp="2019-04-20T00:51:15" time="0.151" tests="6">
+    <testcase classname="Utilities Test Round up valid numbers" name="Utilities Test Round up valid numbers" time="0.002">
+    </testcase>
+    <testcase classname="Utilities Test Round up error: NaN input" name="Utilities Test Round up error: NaN input" time="0.004">
+    </testcase>
+    <testcase classname="Utilities Test Valid positive numbers" name="Utilities Test Valid positive numbers" time="0.001">
+    </testcase>
+    <testcase classname="Utilities Test Invalid positive numbers" name="Utilities Test Invalid positive numbers" time="0.001">
+    </testcase>
+    <testcase classname="Utilities Test Is a number" name="Utilities Test Is a number" time="0.001">
+    </testcase>
+    <testcase classname="Utilities Test Is not a number" name="Utilities Test Is not a number" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
